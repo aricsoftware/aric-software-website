@@ -79,9 +79,10 @@
 
   <!-- ========== HERO ========== -->
   <section id="hero" class="relative isolate overflow-hidden bg-gradient-to-br from-brand-950 via-brand-900 to-brand-700 pt-28 pb-20 sm:pt-36 sm:pb-28">
-    <div class="absolute inset-0 -z-10 opacity-20" aria-hidden="true">
-      <svg class="h-full w-full" viewBox="0 0 1440 800" fill="none"><circle cx="200" cy="400" r="500" fill="white" opacity=".04"/><circle cx="1200" cy="200" r="400" fill="white" opacity=".06"/></svg>
+    <div class="absolute inset-0 -z-20" aria-hidden="true">
+      <img src="images/hero-coding.jpg" alt="" class="h-full w-full object-cover object-center opacity-40" loading="eager" style="-webkit-mask-image: linear-gradient(to bottom right, black 30%, transparent 90%); mask-image: linear-gradient(to bottom right, black 30%, transparent 90%);" />
     </div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-950/80 via-brand-900/70 to-brand-700/80" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-brand-300 text-sm font-semibold uppercase tracking-widest mb-4">ARIC Software &amp; Design, Inc</p>
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
@@ -93,9 +94,6 @@
       <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="#services" class="w-full sm:w-auto rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-brand-700 shadow-lg hover:bg-brand-50 transition">Our Services</a>
         <a href="#contact" class="w-full sm:w-auto rounded-xl border-2 border-brand-400 px-8 py-3.5 text-sm font-bold text-white hover:bg-white/10 transition">Contact Us</a>
-      </div>
-      <div class="mt-16 mx-auto max-w-4xl">
-        <img src="images/team-collaboration.jpg" alt="Software professionals collaborating at a computer" class="rounded-2xl shadow-2xl ring-1 ring-white/10 w-full" loading="eager" />
       </div>
     </div>
   </section>
@@ -187,7 +185,15 @@
           </p>
         </div>
         <div class="fade-in flex flex-col items-center justify-center gap-8">
-          <img src="images/developer-coding.jpg" alt="Female software engineer coding on computer" class="rounded-2xl shadow-lg w-full object-cover max-h-80" loading="lazy" />
+          <div class="relative w-full max-h-80 rounded-2xl shadow-lg overflow-hidden" id="team-carousel">
+            <img src="images/developer-coding.jpg" alt="Diverse team in a focused office meeting" class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[10000ms] ease-in-out opacity-100" />
+            <img src="images/diverse-team-2.jpg" alt="Diverse team collaborating on a laptop" class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[10000ms] ease-in-out opacity-0" />
+            <img src="images/diverse-team-3.jpg" alt="Engineers designing in a meeting" class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[10000ms] ease-in-out opacity-0" />
+            <img src="images/diverse-team-4.jpg" alt="Team of developers working on computers in a tech office" class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[10000ms] ease-in-out opacity-0" />
+            <img src="images/diverse-team-5.jpg" alt="Professionals discussing a project at a computer" class="absolute inset-0 h-full w-full object-cover transition-opacity duration-[10000ms] ease-in-out opacity-0" />
+            <!-- invisible spacer to maintain container height -->
+            <img src="images/developer-coding.jpg" alt="" class="invisible w-full object-cover max-h-80" aria-hidden="true" />
+          </div>
           <div class="grid grid-cols-2 gap-4 sm:gap-6 text-center w-full">
             <div class="rounded-2xl bg-brand-50 p-6 sm:p-8">
               <p class="text-3xl sm:text-4xl font-extrabold text-brand-700">150+</p>
@@ -212,7 +218,11 @@
   </section>
 
   <!-- ========== SOLUTIONS / CTA ========== -->
-  <section id="solutions" class="py-20 sm:py-28 bg-gradient-to-br from-brand-900 to-brand-950 text-white">
+  <section id="solutions" class="relative isolate overflow-hidden py-20 sm:py-28 text-white">
+    <div class="absolute inset-0 -z-20" aria-hidden="true">
+      <img src="images/team-code-review.jpg" alt="" class="h-full w-full object-cover object-center opacity-30" loading="lazy" />
+    </div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-900/70 to-brand-950/75" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center fade-in">
       <p class="text-brand-300 text-sm font-semibold uppercase tracking-widest">ARIC Enterprise Solutions</p>
       <h2 class="mt-2 text-3xl sm:text-4xl font-bold">Enterprise-Grade. Future-Ready.</h2>
@@ -234,9 +244,6 @@
         </div>
       </div>
       <a href="#contact" class="mt-12 inline-flex rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-brand-700 shadow-lg hover:bg-brand-50 transition">Talk to Our Enterprise Team</a>
-      <div class="mt-16 mx-auto max-w-4xl">
-        <img src="images/team-code-review.jpg" alt="Two developers reviewing code together" class="rounded-2xl shadow-2xl ring-1 ring-white/10 w-full" loading="lazy" />
-      </div>
     </div>
   </section>
 
@@ -340,6 +347,19 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
     }, { threshold: 0.15 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Team image carousel – fade rotation every 30s
+    (function() {
+      const imgs = document.querySelectorAll('#team-carousel img:not(.invisible)');
+      let current = 0;
+      setInterval(() => {
+        imgs[current].classList.remove('opacity-100');
+        imgs[current].classList.add('opacity-0');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.remove('opacity-0');
+        imgs[current].classList.add('opacity-100');
+      }, 30000);
+    })();
   </script>
 
 </body>
